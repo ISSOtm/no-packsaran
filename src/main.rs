@@ -70,9 +70,9 @@ fn defeat_any_fit(palette_size: usize) -> (Vec<Vec<u8>>, u8) {
 fn gen_image(tile_size: usize, nb_colors: u8, tile_colors: Vec<Vec<u8>>, path: &Path) {
     let palette = (0..nb_colors).map(|i| {
         let (red, green, blue) = Srgb::from_color(Hsl::new_srgb(
-            f32::from(i) / f32::from(nb_colors) * 360.,
-            1.0, // Max saturation.
-            0.5, // Clear colour.
+            f32::from(i / 2) / f32::from(nb_colors / 2) * 360.,
+            1.0,                                  // Max saturation.
+            if i % 2 == 0 { 0.25 } else { 0.75 }, // Alternate between darker and brighter colours.
         ))
         .into_format()
         .into_components();
